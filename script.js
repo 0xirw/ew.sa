@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultsButton = document.getElementById('results-theme');
   const volumeIcon = document.getElementById('volume-icon');
   const volumeSlider = document.getElementById('volume-slider');
-  const transparencySlider = document.getElementById('transparency-slider');
   const backgroundVideo = document.getElementById('background');
   const hackerOverlay = document.getElementById('hacker-overlay');
   const snowOverlay = document.getElementById('snow-overlay');
@@ -159,9 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
   
   startScreen.addEventListener('click', () => {
     startScreen.classList.add('hidden');
-    backgroundMusic.muted = false;
-    backgroundMusic.play().catch(err => {
-      console.error("Failed to play music after start screen click:", err);
+    // Mute background music and play video instead
+    backgroundMusic.muted = true;
+    backgroundVideo.muted = false;
+    backgroundVideo.play().catch(err => {
+      console.error("Failed to play video after start screen click:", err);
     });
     profileBlock.classList.remove('hidden');
     gsap.fromTo(profileBlock,
@@ -190,9 +191,11 @@ document.addEventListener('DOMContentLoaded', () => {
   startScreen.addEventListener('touchstart', (e) => {
     e.preventDefault();
     startScreen.classList.add('hidden');
-    backgroundMusic.muted = false;
-    backgroundMusic.play().catch(err => {
-      console.error("Failed to play music after start screen touch:", err);
+    // Mute background music and play video instead
+    backgroundMusic.muted = true;
+    backgroundVideo.muted = false;
+    backgroundVideo.play().catch(err => {
+      console.error("Failed to play video after start screen touch:", err);
     });
     profileBlock.classList.remove('hidden');
     gsap.fromTo(profileBlock,
@@ -317,59 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
     isMuted = false;
     currentAudio.muted = false;
     volumeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
-  });
-
-
-  transparencySlider.addEventListener('input', () => {
-    const opacity = transparencySlider.value;
-    if (opacity == 0) {
-      profileBlock.style.background = 'rgba(0, 0, 0, 0)';
-      profileBlock.style.borderOpacity = '0';
-      profileBlock.style.borderColor = 'transparent';
-      profileBlock.style.backdropFilter = 'none';
-      skillsBlock.style.background = 'rgba(0, 0, 0, 0)';
-      skillsBlock.style.borderOpacity = '0';
-      skillsBlock.style.borderColor = 'transparent';
-      skillsBlock.style.backdropFilter = 'none';
-   
-      profileBlock.style.pointerEvents = 'auto';
-      socialIcons.forEach(icon => {
-        icon.style.pointerEvents = 'auto';
-        icon.style.opacity = '1';
-      });
-      badges.forEach(badge => {
-        badge.style.pointerEvents = 'auto';
-        badge.style.opacity = '1';
-      });
-      profilePicture.style.pointerEvents = 'auto';
-      profilePicture.style.opacity = '1';
-      profileName.style.opacity = '1';
-      profileBio.style.opacity = '1';
-      visitorCount.style.opacity = '1';
-    } else {
-      profileBlock.style.background = `rgba(0, 0, 0, ${opacity})`;
-      profileBlock.style.borderOpacity = opacity;
-      profileBlock.style.borderColor = '';
-      profileBlock.style.backdropFilter = `blur(${10 * opacity}px)`;
-      skillsBlock.style.background = `rgba(0, 0, 0, ${opacity})`;
-      skillsBlock.style.borderOpacity = opacity;
-      skillsBlock.style.borderColor = '';
-      skillsBlock.style.backdropFilter = `blur(${10 * opacity}px)`;
-      profileBlock.style.pointerEvents = 'auto';
-      socialIcons.forEach(icon => {
-        icon.style.pointerEvents = 'auto';
-        icon.style.opacity = '1';
-      });
-      badges.forEach(badge => {
-        badge.style.pointerEvents = 'auto';
-        badge.style.opacity = '1';
-      });
-      profilePicture.style.pointerEvents = 'auto';
-      profilePicture.style.opacity = '1';
-      profileName.style.opacity = '1';
-      profileBio.style.opacity = '1';
-      visitorCount.style.opacity = '1';
-    }
   });
 
 
